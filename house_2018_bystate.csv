@@ -1,0 +1,51 @@
+State,Republican_seats,Democrat_seats,Total_vote,Republican_vote,Democrat_vote,Other_vote,Majority_seats,Majority_votes,Vote_difference,Seat_difference
+Alabama,6,1,1659895,975737,678687,5471,Republican,Republican,297050,5
+Alaska,1,0,282166,149779,131199,1188,Republican,Republican,18580,1
+Arizona,4,5,2341270,1139251,1179193,22826,Democrat,Democrat,39942,1
+Arkansas,4,0,889298,556339,312978,19981,Republican,Republican,243361,4
+California,7,46,12184522,3973396,8010445,200681,Democrat,Democrat,4037049,39
+Colorado,3,4,2513907,1079772,1343211,90924,Democrat,Democrat,263439,1
+Connecticut,0,5,1379808,520521,849341,9946,Democrat,Democrat,328820,5
+Delaware,0,1,353814,125384,227353,1077,Democrat,Democrat,101969,1
+Florida,14,13,7021476,3675417,3307228,38831,Republican,Republican,368189,1
+Georgia,9,5,3802343,1987191,1814469,683,Republican,Republican,172722,4
+Hawaii,0,2,382332,87348,287921,7063,Democrat,Democrat,200573,2
+Idaho,2,0,595724,367993,207303,20428,Republican,Republican,160690,2
+Illinois,5,13,4539704,1754449,2757540,27715,Democrat,Democrat,1003091,8
+Indiana,7,2,2256149,1247978,1000104,8067,Republican,Republican,247874,5
+Iowa,1,3,1316648,612338,664676,39634,Democrat,Democrat,52338,2
+Kansas,3,1,1050322,563190,464380,22752,Republican,Republican,98810,2
+Kentucky,5,1,1569798,935304,612977,21517,Republican,Republican,322327,4
+Louisiana,5,1,1460593,835715,553184,71694,Republican,Republican,282531,4
+Maine,0,2,623424,250119,343635,29670,Democrat,Democrat,93516,2
+Maryland,1,7,2286284,737906,1493047,55331,Democrat,Democrat,755141,6
+Massachusetts,0,9,2485081,497953,1943597,43531,Democrat,Democrat,1445644,9
+Michigan,7,7,4154703,1853459,2175003,126241,Split,Democrat,321544,0
+Minnesota,3,5,2576996,1125533,1420769,30694,Democrat,Democrat,295236,2
+Mississippi,3,1,938903,471162,398770,68971,Republican,Republican,72392,2
+Missouri,6,2,2418413,1330975,1027969,59469,Republican,Republican,303006,4
+Montana,1,0,504421,256661,233284,14476,Republican,Republican,23377,1
+Nebraska,3,0,696570,432077,264493,,Republican,Republican,167584,3
+Nevada,1,3,960774,439727,491272,29775,Republican,Democrat,51545,2
+New Hampshire,0,2,570744,248986,311242,10516,Democrat,Democrat,62256,2
+New Jersey,1,11,3098743,1198664,1856819,43260,Democrat,Democrat,658155,10
+New Mexico,0,3,693311,264701,404026,24584,Democrat,Democrat,139325,3
+New York,6,21,5948673,1859074,3990483,99116,Democrat,Democrat,2131409,15
+North Carolina,9,3,3663326,1846041,1771061,46224,Republican,Republican,74980,6
+North Dakota,1,0,321532,193568,114377,13587,Republican,Republican,79191,1
+Ohio,12,4,4406358,2291333,2082684,32341,Republican,Republican,208649,8
+Oklahoma,4,1,1178836,730531,428452,19853,Republican,Republican,302079,3
+Oregon,1,4,1847646,702531,1061412,83703,Democrat,Democrat,358881,3
+Pennsylvania,9,9,4929875,2206260,2712665,10950,Split,Democrat,506405,0
+Rhode Island,0,2,373280,129838,242575,867,Democrat,Democrat,112737,2
+South Carolina,5,2,1709292,927494,758340,23458,Republican,Republican,169154,3
+South Dakota,1,0,335965,202695,121033,12237,Republican,Republican,81662,1
+Tennessee,7,2,2159825,1279655,846450,33720,Republican,Republican,433205,5
+Texas,23,13,8202708,4135359,3852752,214597,Republican,Republican,282607,10
+Utah,3,1,1052506,617307,374009,61190,Republican,Republican,243298,2
+Vermont,0,1,272451,70705,188547,13199,Democrat,Democrat,117842,1
+Virginia,4,7,3312956,1408701,1867061,37194,Democrat,Democrat,458360,3
+Washington,3,7,3021951,1048712,1811371,161868,Democrat,Democrat,762659,4
+West Virginia,3,0,577991,337146,234568,6277,Republican,Republican,102578,3
+Wisconsin,5,3,2571655,1172964,1367492,31199,Republican,Democrat,194528,2
+Wyoming,1,0,201245,127963,59903,13379,Republican,Republican,68060,1
