@@ -1,4 +1,4 @@
-## Special Topic | Data Analysis and Visualization with R  ---------------------
+## Special Topic | Data Analysis and Visualization with R | Part II  ---------------------
 
 # Matt Steele, Government Information Librarian, West Virginia University 
 
@@ -15,12 +15,14 @@
   install.packages("Hmisc")
   install.packages("descr")
   install.packages("glue")
+  install.packages("skimr")
 
   library(tidyverse)
   library(foreign)
   library(Hmisc)
   library(descr)
   library(glue)
+  library(skimr)
   
 
 ## Tidyverse ----------------------------------------------------------------
@@ -90,19 +92,25 @@
   
 #Recoding variables makes new variables out of existing variables.
   
-  #Adding a numeric value to an categorical variable
+  # Adding a numeric value to an categorical variable
   
   freq(spssDemo$inccat)
   
-  spssDemo <- mutate(spssDemo, inccat_num = recode_factor(inccat, "Under $25" = 1, "$25 - $49" = 2, "$50 - $74" = 3, "$75+" = 4, .ordered = T, ))
-  view(spssDemo)
+  # Use the structure function to recode variables
+  
+    skim(spssDemo$inccat)
+    spssDemo <- mutate(spssDemo, inccat_num = recode_factor(inccat, "Under $25" = 1, "$25 - $49" = 2, "$50 - $74" = 3, "$75+" = 4, .ordered = T, ))
+    
+    # see the result 
+    
+    view(spssDemo)
   
   
   freq(spssDemo$inccat_num)
   summary(spssDemo$inccat_num)
   str(spssDemo$inccat_num)
   
-#Recoding Age into Age Groups <30=1, 30-40=2, >40=3
+# Recoding Age into Age Groups <30=1, 30-40=2, >40=3
   
   spssDemo$age_cat[spssDemo$age<30]=1
   spssDemo$age_cat[spssDemo$age>=30 & spssDemo$age<=40]=2
@@ -110,9 +118,7 @@
   
   view(spssDemo)
 
-
-
-#Remove or recode absent data --------------------------------------------------------
+# Remove or recode absent data --------------------------------------------------------
   
   #We can remove absent data using the mutate function from Dplyr. However the data value must match current contents of the 
   

@@ -1,4 +1,4 @@
-## Special Topic | Data Analysis and Visualization with R  ---------------------
+## Special Topic | Data Analysis and Visualization with R | Part I  ---------------------
 
 # Matt Steele, Government Information Librarian, West Virginia University 
 
@@ -121,6 +121,7 @@ To set your working directory:
       #read.table
   
     gss = read.csv("R_Data_2018.csv", na.strings=c(" ",""))
+    gss
     gss <- as_tibble(gss)
     gss
     
@@ -135,14 +136,13 @@ To set your working directory:
     
   names(gss)
     
-  #If you want to import data from other statistical software programs,
-    #you can use the foreign library.
+  #If you want to import data from other statistical software programs, you can use the foreign library.
   
   
     install.packages("foreign")
     library(foreign)
     
-    #CRAN Documentation for "Foreign" - https://cran.r-project.org/web/packages/foreign/foreign.pdf
+  #CRAN Documentation for "Foreign" - https://cran.r-project.org/web/packages/foreign/foreign.pdf
     
     spssDemo <- read.spss("demo.sav", use.value.labels = T)
     spssDemo <- as_tibble(spssDemo)
@@ -168,4 +168,21 @@ To set your working directory:
   #to view the structure of all variables,
     
     str(gss)
+    
+    
+## Saving and Exporting R ---------------------------------------------------
+    
+    
+  # Command history
+    
+    history() #Last 25 commands
+    history(max.show=Inf) #All commands during session
+    savehistory(file="IntroR")
+    getwd()
+    
+  # You can use write.csv() to export a csv file of your data.
+    
+    quickSave <-  write.csv(spssDemo, "Demographic_data.csv")
+    
+  #You should save the script file as a .R file, which can be opened with a text file editor, or in R.
 

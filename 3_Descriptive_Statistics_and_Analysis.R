@@ -1,4 +1,4 @@
-## Special Topic | Data Analysis and Visualization with R  ---------------------
+## Special Topic | Data Analysis and Visualization with R | Part III  ---------------------
 
 # Matt Steele, Government Information Librarian, West Virginia University 
 
@@ -19,6 +19,7 @@ install.packages("glue")
 install.packages("magrittr")
 install.packages("car")
 install.packages("skimr")
+install.packages("gplots")
 
 
 library(tidyverse)
@@ -29,6 +30,7 @@ library(glue)
 library(magrittr)
 library(car)
 library(skimr)
+library(gplots)
 
 
 #Working Directory ----------------------------------------------------------
@@ -60,27 +62,33 @@ setwd()
   skim(spssDemo)
   skim(spssDemo_num)
   
+  
+  
+# Dummy Variables -----------------------------------------------------------
+  
   spssDemo_income25 <-  filter(spssDemo, inccat == "Under $25")
   
+  view(spssDemo_income25)
   skim(spssDemo_income25)
   
   
-# Numeric variables
   
-  summary(spssDemo)
+# Descriptive variables ---------------------------------------------------------
+  
+  summary(spssDemo) # descriptive statistics for numeric /// frequency for factors and characters 
   summary(spssDemo$income)
   
-  describe(spssDemo)
+  describe(spssDemo) # more in-depth look at variable descriptive statistics
   describe(spssDemo$income)
   
-  mean(spssDemo$income)
-  median(spssDemo$income)
-  mode(spssDemo$income)
+  mean(spssDemo$income) #average of observed cases
+  median(spssDemo$income) #the middle number(s) of observed cases
+  mode(spssDemo$income) # most commonly occurring number of observed cases
   
-  min(spssDemo$income)
-  max(spssDemo$income)
+  min(spssDemo$income) # lowest number in observed cases
+  max(spssDemo$income) # highest number in observed cases
+  range(spssDemo$income) # highest and lowest number in observed cases
   
-  range(spssDemo$income)
   quantile(spssDemo$income, .25) #1st
   quantile(spssDemo$income, .75) #2nd
   fivenum(spssDemo$income) # vector of length 5 with the minimum, 25th percentile, median, 75th percentile, maximum values
@@ -89,7 +97,8 @@ setwd()
   
   coEffVar_income <-   sd(spssDemo$income) /  mean(spssDemo$income)
   coEffVar_income
-  
+
+
   
   # Categorical/Factor Values --- descr package ---------------------------------------
   
@@ -125,25 +134,19 @@ setwd()
   crosstab(spssDemo$inccat, spssDemo$marital, chisq = TRUE)
   
   #From the p value, we can reject the null and support the alternative.
+
   
-  # Scatterplots and Bivariate Correlation ------------------------------------------
+## Correlation Coefficient ------------------------------------------------------- 
+
+  # covariance is subject to the scale being measured thus can only be evaluated in that context. 
+  # The Correlation Coefficient adjust from that and allows it to measured against other observations. It can never be more than 1 or less than -1
   
-  #to do a scatterplot of two continuous variables,
+  cor(spssDemo$car, spssDemo$income)
+  cor.test(spssDemo$car, spssDemo$income)
+  cor.test(spssDemo$car, spssDemo_num$inccat)
   
-  plot(gss$age, gss$realrinc)
   
-  #for a better versionm,
   
-  plot(gss$age, gss$realrinc, cex=.5, pch=19)
-  
-  #to assess if there is a linear relationship, you can do a bivariate correlation:
-  
-  library(Hmisc)
-  
-  rcorr(gss$age, gss$realrinc)
-  
-  #There is a weak positive linear relationship between the two variables.
-    
   
 ## Scatterplots and Bivariate Correlation ------------------------------------------
   
@@ -201,35 +204,33 @@ setwd()
   
   #Two visualizations
   
-  boxplot(age ~ marital, data = gss,
-          xlab = "Marital Status", ylab = "Income",
+  boxplot(age ~ inccat, data = spssDemo,
+          xlab = "Income", ylab = "Age",
           frame = FALSE, col = c("#00AFBB", "#E7B800", "#FC4E07"))
   
-  install.packages("gplots")
-  library("gplots")
-  plotmeans(age ~ marital, data = gss, frame = FALSE,
+  # Mean plots with GPLots
+  
+  plotmeans(age ~ inccat, data = spssDemo, frame = FALSE,
             xlab = "Marital Status", ylab = "Income",
             main="Mean Plot with 95% CI") 
   
   
   #First, we like to do a Levene's Test for Homogeneity of Variance
   
-  install.packages("car")
-  library("car")
   
-  leveneTest(realrinc ~ marital, data=gss)
+  leveneTest(age ~ inccat, data=spssDemo)
   
   #if the assumption is not rejected:
   
-  anova1 = aov(realrinc ~ marital, data = gss)
+  anova1 = aov(age ~ inccat, data=spssDemo)
   
   summary(anova1)
   
   #if the assumption is rejected:
   
-  oneway.test(realrinc ~ marital, data=gss, var.equal=FALSE)
+  oneway.test(age ~ inccat, data=spssDemo, var.equal=FALSE)
   
   #at this point you would do pairwise post hoc comparisons
   
-  pairwise.t.test(gss$realrinc, gss$marital, p.adj = "bonf")
+  pairwise.t.test(spssDemo$age, spssDemo$inccat, p.adj = "bonf")
   
