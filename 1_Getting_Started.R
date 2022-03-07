@@ -125,6 +125,9 @@ To set your working directory:
     gss <- as_tibble(gss)
     gss
     
+    gss <- read_csv("R_Data_2018.csv")
+    gss
+    
 #In R, you can use fix(gss) to view the data.
 #In R Studio, you can use View(gss)
     

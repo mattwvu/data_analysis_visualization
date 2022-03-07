@@ -118,11 +118,7 @@ setwd()
   prop.table(table(spssDemo$inccat, spssDemo$marital)) #get % instead on freq
   round(prop.table(table(spssDemo$inccat, spssDemo$marital), 1), 2) # round to 2 digits with round()
     
-  # Degrees of Freedom
-  
-  df(spssDemo$inccat, df = 1, df = 2, )
-  df
-
+ 
 
 # Chi Square Test ---------------------------------------------------------
 

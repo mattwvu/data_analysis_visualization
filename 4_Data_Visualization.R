@@ -102,11 +102,14 @@
   bidenApproval.scatter + geom_point() + facet_grid(subgroup ~.) + stat_smooth()
   
 
-# Zoom in on a particular range using - Coordinates
+# Zoom in on a particular range using with Coordinates
   
   bidenApproval.scatter + geom_point() + stat_smooth() + scale_x_date(date_labels = '%m/%d/%Y', limits = as.Date(c("2021-04-01", "2021-04-30")))
   
-  #This is a unique instance because the x value is a date. Typically you would use the function coord_cartesian(10,50) for integers and doubles. For more information - ?coord_cartesian
+  #This is a unique instance because the x value is a date. Typically you would use the function coord_cartesian(10,50) for integers and doubles.
+      #For more information
+  
+      help("coord_cartesian")
   
 
 # Change the look of the plot using Theme ## You can also change lables using labs()

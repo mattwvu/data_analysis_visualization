@@ -56,6 +56,7 @@
   spssDemo <- as_tibble(spssDemo)
   spssDemo
   
+  
   # Import SPSS data with numeric values
   
   
@@ -66,7 +67,7 @@
   
   # Export SPSS file as a CSV file
   
-  write_csv(spssDemo, file = "spssDemo.csv")
+  quickSave <- write_csv(spssDemo, file = "Demographic_data.csv")
   
   
 
@@ -83,6 +84,8 @@
   
   View(spssDemo)
   
+  quickSave
+  
 #To compute a new variable from a mathematical transformation:
   
   spssDemo$age_up = spssDemo$age*2
@@ -98,19 +101,21 @@
   
   # Use the structure function to recode variables
   
-    skim(spssDemo$inccat)
+    summary(spssDemo$inccat)
     spssDemo <- mutate(spssDemo, inccat_num = recode_factor(inccat, "Under $25" = 1, "$25 - $49" = 2, "$50 - $74" = 3, "$75+" = 4, .ordered = T, ))
+    
+    quickSave
     
     # see the result 
     
     view(spssDemo)
   
   
-  freq(spssDemo$inccat_num)
-  summary(spssDemo$inccat_num)
-  str(spssDemo$inccat_num)
-  
-# Recoding Age into Age Groups <30=1, 30-40=2, >40=3
+    freq(spssDemo$inccat_num)
+    summary(spssDemo$inccat_num)
+    str(spssDemo$inccat_num)
+    
+# Recoding a numerical variabe //age/// into Age Groups <30=1, 30-40=2, >40=3
   
   spssDemo$age_cat[spssDemo$age<30]=1
   spssDemo$age_cat[spssDemo$age>=30 & spssDemo$age<=40]=2
@@ -148,45 +153,66 @@
   
   #filter(data, criterion) - subsets data according to criteria
   
-  filter(starwars, hair_color == "blond")
-  tatooineGenderMales <- filter(starwars, gender == "masculine" | homeworld == "Tatooine")
-  tatooineGenderMales
+  spssDemo_genderMale <- filter(spssDemo, gender == "Male") 
+  spssDemo_genderMale
   
+  spssDemo_genderMale_over50 <- spssDemo %>% filter(gender == "Male") %>% filter(age >= 50) 
+  spssDemo_genderMale_over50
   
-  tatooineGenderMales$mass
-  mean(tatooineGenderMales$mass)
-  
-  
+  skim(spssDemo_genderMale_over50$income)
+  mean(spssDemo_genderMale_over50$income)
   
   #select(data) - keeps the variables you mention
   
-  select(starwars, eye_color, height, birth_year)
-  blueStarWars <- select(starwars, skin_color:eye_color)
-  blueStarWars
-  summary(blueStarWars)
+  spssDemo_technology <- select(spssDemo_num, wireless:response)
+  spssDemo_technology
+  
+  
+  crosstab(spssDemo_technology$wireless, spssDemo_technology$response, chisq = T)
+    
   
   
   #mutate(...) - adds a new variable and preserves the rest
   
-  starwars <- mutate(starwars, "BMI" = mass / height)
-  starwars
+  spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
+  spssDemo_technology_totals
+  
+  mean(spssDemo_technology_totals$total_technology)
+  
   
   #transmutate(...) adds a new variable and drops the rest
   
-  starwars.bmi <- transmute(starwars, "BMI" = mass / height)
-  starwars.bmi
+  spssDemo_technology_totals_alone <- transmute(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
+  spssDemo_technology_totals_alone
   
-  #arrage(...)
+  skim(spssDemo_technology_totals_alone)
   
-  arrange(starwars, desc(birth_year))
-  starwars
-  arrange(starwars, +birth_year)
+  spssDemo$total_technology <- spssDemo_technology_totals_alone
+  view(spssDemo)
   
+  
+  #arrage(...) allows you to sort your data
+  
+  help("arrange")
+  
+  
+  arrange(spssDemo_technology_totals, desc(total_technology))
+  
+  
+  spssDemoArrange <- arrange(spssDemo, +age)
+  arrange(spssDemo, -age)
+  
+
   #summarize(...) summarizes a data frame in a single result
-  starwarsMeanBmi <- summarize(starwars, avg.BMI = mean(BMI))
+  
+  spssDemo_meanTechnology <- dplyr::summarise(spssDemo, avgTechnology = mean(age)) 
+  spssDemo_meanTechnology
+  
+  
+  starwarsMeanBmi <- dplyr::summarize(starwars, avg.BMI = mean(BMI))
   starwarsMeanBmi
   
-  starwarsAvgBirthYear <- summarize(starwars, avg.birth_year = median(birth_year))
+  starwarsAvgBirthYear <- dplyr::summarize(starwars, avg.birth_year = median(birth_year))
   starwarsAvgBirthYear
   
   
