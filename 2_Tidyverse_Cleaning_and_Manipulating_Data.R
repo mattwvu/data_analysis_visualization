@@ -53,13 +53,16 @@
   #Import SPSS data with value labels
   
   spssDemo <- read.spss("demo.sav", use.value.labels = T)
+
+    # read.table allows you to do unique arguments while read_table will load the date frame as a tibble
+    # you can still create a tibble data drame using as_tibble
+
   spssDemo <- as_tibble(spssDemo)
   spssDemo
   
   
   # Import SPSS data with numeric values
-  
-  
+   
   spssDemo_num <- read.spss("demo.sav", use.value.labels = F)
   spssDemo_num <- as_tibble(spssDemo_num)
   
