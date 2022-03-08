@@ -86,16 +86,14 @@
   
   bidenApproval.scatter <- ggplot(bidenApproval, aes(modeldate, approve_estimate, color = subgroup))
   
-  idenApproval.scatter + geom_point()
+  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50) #add a reference line 
 
 ## Subsetting Factors with Facets ----------------------------------------------------------
   
     
-  bidenApproval.scatter + geom_point() + facet_grid(subgroup ~.)
+  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50) + facet_grid(subgroup ~.)
   
-
-# Add a Statistics
-  
+  bidenApproval.scatter + geom_point() + facet_grid(~subgroup) 
   bidenApproval.scatter + geom_point() + facet_grid(subgroup ~.) + stat_smooth()
   
 
