@@ -170,7 +170,8 @@
    spssDemo_bar + geom_bar() + theme_light() +
      labs(y = "Count",
           x = "Income Category",
-          title = "Income and Age Group") + facet_wrap(~gender)
+          title = "Income and Age Group by Gender", 
+          fill = "Age") + facet_wrap(~gender)
    # Add another layer by subsetting the plot gender
    
    
