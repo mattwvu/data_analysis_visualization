@@ -159,20 +159,16 @@
   
   spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = age_cat)) #binds the variable Income Category and Marital Status
  
-   spssDemo_bar + geom_bar() + theme_light() +
-    labs(y = "Count",
-         x = "Income Category",
-         title = "Income and Marital Status")
-    # Subsets the graph by gender and education level
-   
-   
-   
-   spssDemo_bar + geom_bar() + theme_light() +
+  spssDemo_bar + geom_bar()
+
+  spssDemo_bar + geom_bar() + theme_light() +
      labs(y = "Count",
           x = "Income Category",
           title = "Income and Age Group by Gender", 
           fill = "Age") + facet_wrap(~gender)
-   # Add another layer by subsetting the plot gender
+   # Add another layer by subsetting the plot gender 
+   
+
    
    
 # You can export graphs to image or pdf using the export button in the bottom right pane.
