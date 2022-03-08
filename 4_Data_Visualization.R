@@ -142,33 +142,43 @@
   
   #Give in a Title
   spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
-    ggtitle("Age Distribution on the Titanic")
+    labs(title = "Age Distribution on the Titanic")
   
   #Give the x and y axis some labels
   spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
     ggtitle("Age Distribution on the Titanic") +
-    labs(y = "Number of Passangers", x = "Age")
+    labs(y = "Number of Passangers", 
+         x = "Age",
+         title = "Age Distribution on the Titanic")
   
   #Give it a new theme
   spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
     ggtitle("Age Distribution on the Titanic") +
-    labs(y = "Number of Passangers", x = "Age") +
+    labs(y = "Number of Passangers", 
+         x = "Age",
+         title = "Age Distribution on the Titanic") +
     theme_minimal()
   
 ## Bar graph ----------------------------------------------------------------------------------
   
   spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = age_cat)) #binds the variable Income Category and Marital Status
- 
+  
   spssDemo_bar + geom_bar()
-
-  spssDemo_bar + geom_bar() + theme_light() +
+ 
+   spssDemo_bar + geom_bar() + theme_light() +
+    labs(y = "Count",
+         x = "Income Category",
+         title = "Income and Marital Status")
+    # Subsets the graph by gender and education level
+   
+   
+   
+   spssDemo_bar + geom_bar() + theme_light() +
      labs(y = "Count",
           x = "Income Category",
           title = "Income and Age Group by Gender", 
           fill = "Age") + facet_wrap(~gender)
-   # Add another layer by subsetting the plot gender 
-   
-
+   # Add another layer by subsetting the plot gender
    
    
 # You can export graphs to image or pdf using the export button in the bottom right pane.
