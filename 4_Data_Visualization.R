@@ -58,6 +58,8 @@
   
   # Quick clean up
   
+    str(bidenApproval)
+  
   #Fix Date
   
     bidenApproval$modeldate <- as.Date(bidenApproval$modeldate, tryFormats = c("%m/%d/%Y"))
@@ -65,15 +67,9 @@
   
   #Fix name of president variable 
   
-    bidenApproval <- mutate(bidenApproval, president_fix = recode(president, "Joe Biden" = "Joe Biden", 'Joseph R. Biden Jr.' = "Joe Biden" ))
+    bidenApproval <- mutate(bidenApproval, president = recode_factor(president, "Joe Biden" = "Joe Biden", 'Joseph R. Biden Jr.' = "Joe Biden" ))
     str(bidenApproval)
   
-  #You can also use Dplyr here to work on the data sets. For instance: You could create a dummy variable 
-    
-    str(bidenApproval) # use the str function to recode
-    bidenApproval <- mutate( bidenApproval, subgroup_num = recode_factor(subgroup, "Adults" = 1, "Voters" = 2, "All polls" = 3, .ordered = F ))
-    bidenApproval
-    
     skim(bidenApproval)
 
     
@@ -90,6 +86,7 @@
   
   bidenApproval.scatter <- ggplot(bidenApproval, aes(modeldate, approve_estimate, color = subgroup))
   
+  idenApproval.scatter + geom_point()
 
 ## Subsetting Factors with Facets ----------------------------------------------------------
   
@@ -160,7 +157,7 @@
   
 ## Bar graph ----------------------------------------------------------------------------------
   
-  spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = marital)) #binds the variable Income Category and Marital Status
+  spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = age_cat)) #binds the variable Income Category and Marital Status
  
    spssDemo_bar + geom_bar() + theme_light() +
     labs(y = "Count",
@@ -173,8 +170,8 @@
    spssDemo_bar + geom_bar() + theme_light() +
      labs(y = "Count",
           x = "Income Category",
-          title = "Income and Marital Status") + facet_wrap(gender ~ ed)
-   # Add another layer by subsetting the plot around the education level and gender
+          title = "Income and Age Group") + facet_wrap(~gender)
+   # Add another layer by subsetting the plot gender
    
    
 # You can export graphs to image or pdf using the export button in the bottom right pane.

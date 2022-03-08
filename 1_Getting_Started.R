@@ -131,26 +131,13 @@ To set your working directory:
 #In R, you can use fix(gss) to view the data.
 #In R Studio, you can use View(gss)
     
-  View(gss)
+    View(gss)
     
 # Viewing Data and Variables ----------------------------------------------
     
   #The names() function can display the variable names in the data.
     
-  names(gss)
-    
-  #If you want to import data from other statistical software programs, you can use the foreign library.
-  
-  
-    install.packages("foreign")
-    library(foreign)
-    
-  #CRAN Documentation for "Foreign" - https://cran.r-project.org/web/packages/foreign/foreign.pdf
-    
-    spssDemo <- read.spss("demo.sav", use.value.labels = T)
-    spssDemo <- as_tibble(spssDemo)
-    view(spssDemo)
-    
+    names(gss)
     
   #you can use the head() function to see the first six rows of the dataset.
     

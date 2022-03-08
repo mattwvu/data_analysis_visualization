@@ -50,27 +50,31 @@
   
 #Importing data -----------------------------------------------------------
   
-  #Import SPSS data with value labels
+  # If you want to import data from other statistical software programs, you can use the foreign library.
   
-  spssDemo <- read.spss("demo.sav", use.value.labels = T)
-
+  # CRAN Documentation for "Foreign" - https://cran.r-project.org/web/packages/foreign/foreign.pdf
+  
+  # Import SPSS data with value labels
+    
+    spssDemo <- read.spss("demo.sav", use.value.labels = T)
+    spssDemo
+  
     # read.table allows you to do unique arguments while read_table will load the date frame as a tibble
     # you can still create a tibble data drame using as_tibble
 
-  spssDemo <- as_tibble(spssDemo)
-  spssDemo
-  
+    spssDemo <- as_tibble(spssDemo)
+    spssDemo
+    view(spssDemo)
   
   # Import SPSS data with numeric values
    
-  spssDemo_num <- read.spss("demo.sav", use.value.labels = F)
-  spssDemo_num <- as_tibble(spssDemo_num)
-  
-  spssDemo_num
+    spssDemo_num <- read.spss("demo.sav", use.value.labels = F)
+    spssDemo_num <- as_tibble(spssDemo_num)
+    spssDemo_num
   
   # Export SPSS file as a CSV file
   
-  quickSave <- write_csv(spssDemo, file = "Demographic_data.csv")
+    quickSave <- write_csv(spssDemo, file = "Demographic_data.csv")
   
   
 
@@ -81,164 +85,160 @@
   
 # Computing and Re-coding Variables ----------------------------------------
   
-#To duplicate an existing variable,
+  # To duplicate an existing variable,
   
-  spssDemo$age_up = spssDemo$age
+    spssDemo$age_up = spssDemo$age
+    
+    View(spssDemo)
+    
+    quickSave
   
-  View(spssDemo)
+  # To compute a new variable from a mathematical transformation:
   
-  quickSave
+    spssDemo$age_up = spssDemo$age*2
+    
+    summary(spssDemo$age)
+    summary(spssDemo$age_up)
   
-#To compute a new variable from a mathematical transformation:
-  
-  spssDemo$age_up = spssDemo$age*2
-  
-  summary(spssDemo$age)
-  summary(spssDemo$age_up)
-  
-#Recoding variables makes new variables out of existing variables.
+# Re-coding variables  --------------------------------------------------
   
   # Adding a numeric value to an categorical variable
   
-  freq(spssDemo$inccat)
+    freq(spssDemo$inccat)
   
-  # Use the structure function to recode variables
-  
-    summary(spssDemo$inccat)
+    summary(spssDemo$inccat) # Use the summary or str function to see a variable's value label 
+    
     spssDemo <- mutate(spssDemo, inccat_num = recode_factor(inccat, "Under $25" = 1, "$25 - $49" = 2, "$50 - $74" = 3, "$75+" = 4, .ordered = T, ))
     
-    quickSave
-    
-    # see the result 
-    
+    view(spssDemo) # see the result
+  
+  
+  # Re-coding a numerical variable //age/// into Age Groups <30=1, 30-40=2, >40=3
+  
+    spssDemo$age_cat_num[spssDemo$age<30]=1
+    spssDemo$age_cat_num[spssDemo$age>=30 & spssDemo$age<=60]=2
+    spssDemo$age_cat_num[spssDemo$age>40]=3
+  
+    spssDemo <- mutate(spssDemo, age_cat = recode_factor(age_cat_num, "1" = "Under 30", "2" = " 30 to 60", "3" = "Over 60", .ordered = T ))
+  
     view(spssDemo)
+
+  # Remove or re-code absent data
   
+    #We can remove absent data using the mutate function from Dplyr. 
+    #Some packages have data sets included in the package that you can load and practice on. 
   
-    freq(spssDemo$inccat_num)
-    summary(spssDemo$inccat_num)
-    str(spssDemo$inccat_num)
+    view(starwars)
+    starwars
+  
+  # Replace missing variable in a column
+  
+    help("replace_na")
     
-# Recoding a numerical variabe //age/// into Age Groups <30=1, 30-40=2, >40=3
+    starwars <- starwars %>% mutate(height = ifelse(is.na(height), 999, height))
+    view(starwars)
   
-  spssDemo$age_cat[spssDemo$age<30]=1
-  spssDemo$age_cat[spssDemo$age>=30 & spssDemo$age<=40]=2
-  spssDemo$age_cat[spssDemo$age>40]=3
+  #Remove NA values
   
-  view(spssDemo)
-
-# Remove or recode absent data --------------------------------------------------------
-  
-  #We can remove absent data using the mutate function from Dplyr. However the data value must match current contents of the 
-  
-  #Some packages have datasets included in the package that you can load and practice on. 
-  
-  view(starwars)
-  starwars
-  
-  #replace a column
-  
-
-  help("replace_na")
-  
-  starwars <- starwars %>% mutate(height = ifelse(is.na(height), 999, height))
-  view(starwars)
-  
-  #remove NA values
-  
-  #Some packages have datasets included in the package that you can load and practice on. 
-  
-  view(starwars)
-  
-  starwars_removedNA <- na.omit(starwars)
-  starwars_removedNA  
+    starwars_removedNA <- na.omit(starwars)
+    starwars_removedNA  
 
 ## Manipulate Data ----------------------------------------------------------------
   
   #filter(data, criterion) - subsets data according to criteria
+    
+    help("filter")
+    
+    spssDemo_genderMarried <- filter(spssDemo, marital == "Married") 
+    view(spssDemo_genderMarried)
+    
+    spssDemo_genderMale_over50 <- spssDemo %>% filter(gender == "Male") %>% filter(age >= 50) 
+    spssDemo_genderMale_over50
+    
+    skim(spssDemo_genderMale_over50$income)
+    mean(spssDemo_genderMale_over50$income)
   
-  spssDemo_genderMale <- filter(spssDemo, gender == "Male") 
-  spssDemo_genderMale
-  
-  spssDemo_genderMale_over50 <- spssDemo %>% filter(gender == "Male") %>% filter(age >= 50) 
-  spssDemo_genderMale_over50
-  
-  skim(spssDemo_genderMale_over50$income)
-  mean(spssDemo_genderMale_over50$income)
   
   #select(data) - keeps the variables you mention
   
-  spssDemo_technology <- select(spssDemo_num, wireless:response)
-  spssDemo_technology
-  
-  
-  crosstab(spssDemo_technology$wireless, spssDemo_technology$response, chisq = T)
+    help("select")
     
-  
+    spssDemo_technology <- select(spssDemo_num, wireless:response)
+    
+    spssDemo_technology
   
   #mutate(...) - adds a new variable and preserves the rest
   
-  spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
-  spssDemo_technology_totals
-  
-  mean(spssDemo_technology_totals$total_technology)
-  
-  
-  #transmutate(...) adds a new variable and drops the rest
-  
-  spssDemo_technology_totals_alone <- transmute(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
-  spssDemo_technology_totals_alone
-  
-  skim(spssDemo_technology_totals_alone)
-  
-  spssDemo$total_technology <- spssDemo_technology_totals_alone
-  view(spssDemo)
+    help("mutate")
+    
+    spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response) #add up all of the observations for a variable and create a new variable from that
+    
+    spssDemo_technology_totals
+    
+    mean(spssDemo_technology_totals$total_technology)
   
   
-  #arrage(...) allows you to sort your data
+  #transmute(...) adds a new variable and drops the rest
   
-  help("arrange")
+    help("transmute")
+    
+    spssDemo_technology_totals_alone <- transmute(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
+    
+    spssDemo_technology_totals_alone
+    
+    skim(spssDemo_technology_totals_alone)
+    
+    spssDemo$total_technology <- spssDemo_technology_totals_alone # use the vector created when we tranmute to add it to our dataset
+    
+    spssDemo$total_technology <- as.numeric(unlist(spssDemo$total_technology))
+    
+    view(spssDemo)
+
   
+  #arrange(...) allows you to sort your data
   
-  arrange(spssDemo_technology_totals, desc(total_technology))
-  
-  
-  spssDemoArrange <- arrange(spssDemo, +age)
-  arrange(spssDemo, -age)
+    help("arrange")
+    
+    spssDemoArrange <- arrange(spssDemo, +age)
+    spssDemoArrange
+    spssDemoArrange <- arrange(spssDemo, -age)
+    spssDemoArrange
   
 
   #summarize(...) summarizes a data frame in a single result
   
-  spssDemo_meanTechnology <- dplyr::summarise(spssDemo, avgTechnology = mean(age)) 
-  spssDemo_meanTechnology
-  
-  
-  starwarsMeanBmi <- dplyr::summarize(starwars, avg.BMI = mean(BMI))
-  starwarsMeanBmi
-  
-  starwarsAvgBirthYear <- dplyr::summarize(starwars, avg.birth_year = median(birth_year))
-  starwarsAvgBirthYear
+    spssDemo_meanAge <- dplyr::summarise(spssDemo, avgAge = mean(age)) 
+    spssDemo_meanAge
+    
+    spssDemo_meanIncome <- dplyr::summarise(spssDemo, avgIncome = sum(income)/6400)
+    spssDemo_meanIncome <= 100 #you can then run computations or logical tests on this number
   
   
   #group_by(...) - splits the dataset into groups
+    
+    #Summarize and group by work together to allow you to analyze individual categories
   
-  starwarsEyeColor <- group_by(starwars, eye_color)
-  
-  summarize(starwarsEyeColor, avg.BMI = mean(BMI))
-  
- 
-  #Sampling Data
-  
-  #sample(...)
+    spssDemo_groups <- group_by(spssDemo, marital, carcat, empcat, age_cat)
+    spssDemo_groups <- spssDemo_groups %>% dplyr::summarize(avgIncome = mean(income)) %>% arrange(+avgIncome)
+    
+    
+    view(spssDemo_groups)
+    
+    
+## Sampling Data -------------------------------------------------------------
   
   #sample_n(...) extracts a random sample of a fixed number of rows
-  sample_n(starwars, 10, replace = T)
   
+    spssDemo_sample <- sample_n(spssDemo, 10, replace = T)
+    spssDemo_sample
+    
+    
   #sample_fract(...) extracts a random sample of a fixed percentage of rows
-  sample_frac(starwars, .2, replace = T)
-  
-  starwars.sample <- sample_n(starwars, 10, replace = F)
-  starwars.sample
-  mean(starwars.sample$BMI)
+    
+    spssDemo_sampleFrac <- sample_frac(spssDemo, .2, replace = T)
+    spssDemo_sampleFrac
+    
+    mean(spssDemo_sampleFrac$total_technology)
   
  ## Tidyr ---------------------------------------------------------------------
   
@@ -246,47 +246,48 @@
   
   # Gather(...) ## is the function that reorganizes data that have values as column names
   
-  help("gather")
-  
-  covid19.us <- read.csv("time_series_covid19_confirmed_US.csv", stringsAsFactors = F)
-  covid19.us <- as_tibble(covid19.us)
-  covid19.us
+    help("gather")
+    
+    covid19.us <- read.csv("time_series_covid19_confirmed_US.csv", stringsAsFactors = F)
+    covid19.us <- as_tibble(covid19.us)
+    covid19.us
   
   # gather(data, col.m:col.n, key, value)
   # key # is the name of the new variable that will hold the values that are currently column names
   # value # is the name of the new variable that will hold the values previously help by the columns
   
-  covid.gathered <- covid19.us %>% gather(January.22..2020:October.19..2020, key = "Date", value = "Cases", na.rm = T) %>% arrange(-Cases)
-  
-  covid.gathered
+    covid.gathered <- covid19.us %>% gather(January.22..2020:October.19..2020, key = "Date", value = "Cases", na.rm = T) %>% arrange(-Cases)
+    
+    covid.gathered
   
   # Separate(column name, sep ="", into = "") ## breaks values in one column into multiple columns
   
-  help("separate")
-  
-  covid.separate <- covid.gathered %>% separate(Combined_Key, sep = ", ", into = c("City", "State", "Country"))
-  covid.separate
-  
+    help("separate")
+    
+    covid.separate <- covid.gathered %>% separate(Combined_Key, sep = ", ", into = c("City", "State", "Country"))
+    covid.separate
+    
   # What about the date
   
-  covid.separate$Date <- as.Date(x = covid.separate$Date, tryFormats = c("%B.%d..%Y"))
-  covid.separate
+    covid.separate$Date <- as.Date(x = covid.separate$Date, tryFormats = c("%B.%d..%Y"))
+    covid.separate
+    
+    covide.separate <- covide.separate %>% separate(Date, sep = "-", into = c("Year", "Month", "Day"))
   
   # Unite(...) ## combine two or more columns
   
   help("unite")
   
-  covid.united <- covid.separate.date %>% unite("Date", sep = "-", c("Year", "Month", 'Day'))
-  covid.united$Date <- as.Date(covid.united$Date)
-  covid.united
+    covid.united <- covid.separate %>% unite("Location", sep = ", " , c("City", "State", 'Country'))
+    covid.united
   
   #spread(...) help to tidy data of one observation in multiple rows
   
-  weather <- read.csv("weather.csv")
-  weather <- as_tibble(weather)
-  weather
-  
-  weather.spread <- spread(weather, key = element, value = value)
-  weather.spread
+    weather <- read.csv("weather.csv")
+    weather <- as_tibble(weather)
+    weather
+    
+    weather.spread <- spread(weather, key = element, value = value)
+    weather.spread
   
   

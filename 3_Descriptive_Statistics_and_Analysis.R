@@ -38,7 +38,7 @@ library(gplots)
 getwd()
 setwd()
 
-#Load dataset from SPSS file ------------------------------------------------
+## Load dataset from SPSS file ------------------------------------------------
 
   spssDemo_num <- read.spss("demo.sav", use.value.labels = F)
   spssDemo_num %>% mutate(across(.cols = jobsat:news, .fns = factor(.)))
@@ -53,17 +53,14 @@ setwd()
   spssDemo <- as_tibble(spssDemo)
   spssDemo
   
- 
-  
+
 ## Descriptive Statistics ---------------------------------------------------- 
 
 # The Skimr package allows you to get an overview of your data  
   
   skim(spssDemo)
   skim(spssDemo_num)
-  
-  
-  
+
 # Dummy Variables -----------------------------------------------------------
   
   spssDemo_income25 <-  filter(spssDemo, inccat == "Under $25")
@@ -108,8 +105,7 @@ setwd()
   
   mean(spssDemo_num$inccat)
   
-  
-  
+
   # Contingency table
   
   table(spssDemo$inccat)
