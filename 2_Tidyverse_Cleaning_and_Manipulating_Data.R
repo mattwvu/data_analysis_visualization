@@ -57,7 +57,7 @@
   # Import SPSS data with value labels
     
     spssDemo <- read.spss("demo.sav", use.value.labels = T)
-    spssDemo
+    view(spssDemo)
   
     # read.table allows you to do unique arguments while read_table will load the date frame as a tibble
     # you can still create a tibble data drame using as_tibble
@@ -117,7 +117,7 @@
   
     spssDemo$age_cat_num[spssDemo$age<30]=1
     spssDemo$age_cat_num[spssDemo$age>=30 & spssDemo$age<=60]=2
-    spssDemo$age_cat_num[spssDemo$age>40]=3
+    spssDemo$age_cat_num[spssDemo$age>60]=3
   
     spssDemo <- mutate(spssDemo, age_cat = recode_factor(age_cat_num, "1" = "Under 30", "2" = " 30 to 60", "3" = "Over 60", .ordered = T ))
   
@@ -135,7 +135,7 @@
   
     help("replace_na")
     
-    starwars <- starwars %>% mutate(height = ifelse(is.na(height), 999, height))
+    starwars <- starwars %>% mutate(height = ifelse(is.na(height), 999, height_na))
     view(starwars)
   
   #Remove NA values
@@ -148,9 +148,11 @@
   #filter(data, criterion) - subsets data according to criteria
     
     help("filter")
+    spssDemo
     
     spssDemo_genderMarried <- filter(spssDemo, marital == "Married") 
     view(spssDemo_genderMarried)
+    spssDemo_genderMarried
     
     spssDemo_genderMale_over50 <- spssDemo %>% filter(gender == "Male") %>% filter(age >= 50) 
     spssDemo_genderMale_over50
@@ -173,7 +175,7 @@
     
     spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response) #add up all of the observations for a variable and create a new variable from that
     
-    spssDemo_technology_totals
+    view(spssDemo_technology_totals)
     
     mean(spssDemo_technology_totals$total_technology)
   
@@ -207,7 +209,7 @@
 
   #summarize(...) summarizes a data frame in a single result
   
-    spssDemo_meanAge <- dplyr::summarise(spssDemo, avgAge = mean(age)) 
+    dplyr::summarise(spssDemo, avgAge = mean(age)) 
     spssDemo_meanAge
     
     spssDemo_meanIncome <- dplyr::summarise(spssDemo, avgIncome = sum(income)/6400)

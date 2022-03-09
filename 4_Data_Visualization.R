@@ -79,39 +79,63 @@
   bidenApproval.scatter <- ggplot(bidenApproval, aes(modeldate, approve_estimate))
   bidenApproval.scatter
   
+  bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate, y = approve_estimate))
+  bidenApproval.scatter
   
+  
+    
 ## Setting the type of plot with Geometries -------------------------------------------------------------
   
   bidenApproval.scatter + geom_point()
   
-  bidenApproval.scatter <- ggplot(bidenApproval, aes(modeldate, approve_estimate, color = subgroup))
+  #Color by factor levels
   
-  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50) #add a reference line 
+  bidenApproval.scatter + geom_point(aes(color = subgroup))
+  
+  bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate, y = approve_estimate, color = subgroup))
+  
+  #Add a Reference Line
+  
+  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50, size = 3, color = "skyblue") 
+  
+  # The Order of the grammar of plotting is important
+  
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point()
+  
 
 ## Subsetting Factors with Facets ----------------------------------------------------------
   
     
-  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50) + facet_grid(subgroup ~.)
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + facet_grid(subgroup ~.)
   
-  bidenApproval.scatter + geom_point() + facet_grid(~subgroup) 
+
+## Add a Statistical Transformation ----------------------------------------------------
+  
+  # Line to test for overplotting
+
   bidenApproval.scatter + geom_point() + facet_grid(subgroup ~.) + stat_smooth()
   
-
-# Zoom in on a particular range using with Coordinates
+  # You can generally use geoms and stats interchangeably 
   
-  bidenApproval.scatter + geom_point() + stat_smooth() + scale_x_date(date_labels = '%m/%d/%Y', limits = as.Date(c("2021-04-01", "2021-04-30")))
-  
-  #This is a unique instance because the x value is a date. Typically you would use the function coord_cartesian(10,50) for integers and doubles.
-      #For more information
-  
-      help("coord_cartesian")
+  stat_boxplot() == geom_boxplot()
   
 
-# Change the look of the plot using Theme ## You can also change lables using labs()
+# Theme() allows you to change the background of the plot -------------------------------
   
-  bidenApproval.scatter <- ggplot(bidenApproval, aes(modeldate, approve_estimate))
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + theme_update()
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + theme_update()
   
-  bidenApproval.scatter + geom_line(color = "red") + geom_point(color = "gold") + theme_classic() + geom_smooth(color="green") + labs(y="Approval", x = "Date", title = "Joe Biden Presidential Approval")
+
+# Color and Fill allows you to color variables -------------------------------------------  
+  
+  bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate))
+  
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "skyblue") + geom_point (aes(y = approve_estimate), color = "darkred") + geom_point(aes(y = disapprove_estimate), color = "gold") + theme_classic()
+    
+
+## Labs allow you to re-label x, y, title, and legend of the plot
+  
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "skyblue") + geom_point (aes(y = approve_estimate), color = "darkred") + geom_point(aes(y = disapprove_estimate), color = "gold") + theme_classic() + labs(y="Percent Approval", x = "Date", title = "Joe Biden Presidential Approval", color = "category")
   
   
   
@@ -124,38 +148,27 @@
   spssDemo
  
  
-  spssDemo_hist <- ggplot(data = spssDemo, aes(x = age))
+  spssDemo.hist <- ggplot(data = spssDemo, aes(x = age), geom_histogram(binwidth = 5, color = "darkblue", fill = "skyblue"))
   
-  spssDemo_hist + geom_histogram(binwidth = 5)
+  spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue") + theme_classic()
   
-  #bins tie a range of numbers together, in this example we are tying 0-5, 5-10, etc. So what would happen if we made the bin 15
+  #Bins allow to group numeric values into groups based of percentages
   
-  spssDemo_hist + geom_histogram(binwidth = 15)
-  
-  #see the difference
-  
-  #Give it some color
-  
-  spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5)
+    spssDemo.hist + geom_histogram(binwidth = 10, color = "yellow", fill = "skyblue") + theme_classic()
   
   #Give in a Title
-  spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
-    labs(title = "Age Distribution on the Titanic")
+  
+    spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) +
+    labs(title = "Age Distribution of Participants") + theme_classic()
   
   #Give the x and y axis some labels
-  spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
-    ggtitle("Age Distribution on the Titanic") +
-    labs(y = "Number of Passangers", 
-         x = "Age",
-         title = "Age Distribution on the Titanic")
   
-  #Give it a new theme
-  spssDemo_hist + geom_histogram(binwidth = 5, color = "darkslategray", fill = "darkslategray4", alpha = 0.5) +
-    ggtitle("Age Distribution on the Titanic") +
-    labs(y = "Number of Passangers", 
+    spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) +
+    labs(y = "Number of Participants", 
          x = "Age",
-         title = "Age Distribution on the Titanic") +
-    theme_minimal()
+         title = " Age Distribution on the Titanic") +
+      theme_classic()
+ 
   
 ## Bar graph ----------------------------------------------------------------------------------
   
