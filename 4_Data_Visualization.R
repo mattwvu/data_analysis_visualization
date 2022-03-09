@@ -90,23 +90,36 @@
   
   #Color by factor levels
   
-  bidenApproval.scatter + geom_point(aes(color = subgroup))
+  bidenApproval.scatter + geom_point(aes(color = subgroup)) + 
+    scale_color_manual(values=c("darkseagreen", "blueviolet", "coral")) +
+    theme_minimal()
   
-  bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate, y = approve_estimate, color = subgroup))
+  
+  #Save the factor color
+  
+  bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate, y = approve_estimate, color = subgroup, shape = subgroup))
   
   #Add a Reference Line
   
-  bidenApproval.scatter + geom_point() + geom_hline(yintercept = 50, size = 3, color = "skyblue") 
+  bidenApproval.scatter + geom_point() + 
+    geom_hline(yintercept = 50, size = 3, color = "grey") +
+    theme_minimal()
   
   # The Order of the grammar of plotting is important
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point()
+  bidenApproval.scatter + 
+    geom_hline(yintercept = 50, size = 5, color = "grey") + 
+    geom_point() +
+    theme_bw()
   
 
 ## Subsetting Factors with Facets ----------------------------------------------------------
   
     
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + facet_grid(subgroup ~.)
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "grey") + 
+    geom_point() + facet_grid(subgroup ~.) + 
+    scale_color_manual(values=c("darkseagreen", "blueviolet", "coral")) +
+    theme_minimal()
   
 
 ## Add a Statistical Transformation ----------------------------------------------------
@@ -117,25 +130,43 @@
   
   # You can generally use geoms and stats interchangeably 
   
-  stat_boxplot() == geom_boxplot()
+  bidenApproval.scatter + geom_point() + geom_smooth()
+  
+  # For instance you can use either to create a box plot stat_boxplot() == geom_boxplot()
   
 
 # Theme() allows you to change the background of the plot -------------------------------
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + theme_update()
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + geom_point() + theme_update()
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + 
+    geom_point() + 
+    theme_update()
+  
+  
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + 
+    geom_point() + 
+    theme_classic()
   
 
 # Color and Fill allows you to color variables -------------------------------------------  
   
   bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate))
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "skyblue") + geom_point (aes(y = approve_estimate), color = "darkred") + geom_point(aes(y = disapprove_estimate), color = "gold") + theme_classic()
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "grey") + 
+    geom_point (aes(y = approve_estimate), color = "darkseagreen") + 
+    geom_point(aes(y = disapprove_estimate), color = "coral") + 
+    theme_bw()
     
 
 ## Labs allow you to re-label x, y, title, and legend of the plot
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "skyblue") + geom_point (aes(y = approve_estimate), color = "darkred") + geom_point(aes(y = disapprove_estimate), color = "gold") + theme_classic() + labs(y="Percent Approval", x = "Date", title = "Joe Biden Presidential Approval", color = "category")
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "grey") + 
+    geom_point (aes(y = approve_estimate), color = "darkseagreen") + 
+    geom_point (aes(y = disapprove_estimate), color = "coral") +  
+    labs(y="Percent Approval", 
+         x = "Date", 
+         title = "Joe Biden Presidential Approval", 
+         color = "category") +
+    theme_classic()
   
   
   
@@ -148,23 +179,28 @@
   spssDemo
  
  
-  spssDemo.hist <- ggplot(data = spssDemo, aes(x = age), geom_histogram(binwidth = 5, color = "darkblue", fill = "skyblue"))
+  spssDemo.hist <- ggplot(data = spssDemo, aes(x = age))
   
-  spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue") + theme_classic()
+  spssDemo.hist + 
+    geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue") + theme_classic()
   
   #Bins allow to group numeric values into groups based of percentages
   
-    spssDemo.hist + geom_histogram(binwidth = 10, color = "yellow", fill = "skyblue") + theme_classic()
+    spssDemo.hist + 
+      geom_histogram(binwidth = 10, color = "yellow", fill = "skyblue") + theme_classic()
   
   #Give in a Title
   
-    spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) +
-    labs(title = "Age Distribution of Participants") + theme_classic()
+    spssDemo.hist + 
+      geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) + 
+      labs(title = "Age Distribution of Participants") + 
+      theme_classic()
   
   #Give the x and y axis some labels
   
-    spssDemo.hist + geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) +
-    labs(y = "Number of Participants", 
+    spssDemo.hist + 
+      geom_histogram(binwidth = 5, color = "yellow", fill = "skyblue", alpha = 0.5) +
+      labs(y = "Number of Participants", 
          x = "Age",
          title = " Age Distribution on the Titanic") +
       theme_classic()
@@ -172,7 +208,8 @@
   
 ## Bar graph ----------------------------------------------------------------------------------
   
-  spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = age_cat)) #binds the variable Income Category and Marital Status
+  spssDemo_bar <- ggplot(spssDemo, aes(x = inccat,  fill = age_cat)) 
+    #binds the variable Income Category and Marital Status
   
   spssDemo_bar + geom_bar()
  
@@ -188,8 +225,10 @@
      labs(y = "Count",
           x = "Income Category",
           title = "Income and Age Group by Gender", 
-          fill = "Age") + facet_wrap(~gender)
-   # Add another layer by subsetting the plot gender
+          fill = "Age") + 
+     facet_wrap(~gender)
+  
+    # Add another layer by subsetting the plot gender
    
    
 # You can export graphs to image or pdf using the export button in the bottom right pane.
