@@ -74,10 +74,9 @@
   
   # Export SPSS file as a CSV file
   
-    quickSave <- write_csv(spssDemo, file = "Demographic_data.csv")
+    write_csv(spssDemo, file = "demo_20220309.csv")
   
   
-
 ## Dplyr Package ---------------------------------------------------------------
   
   #Dplyr allows you to use it's built-in functions to manipulate data
@@ -91,14 +90,16 @@
     
     View(spssDemo)
     
-    quickSave
-  
   # To compute a new variable from a mathematical transformation:
   
     spssDemo$age_up = spssDemo$age*2
     
     summary(spssDemo$age)
     summary(spssDemo$age_up)
+    
+    write_csv(spssDemo, file = "demo_20220309.csv")
+    
+    #Saves the file
   
 # Re-coding variables  --------------------------------------------------
   
@@ -111,6 +112,8 @@
     spssDemo <- mutate(spssDemo, inccat_num = recode_factor(inccat, "Under $25" = 1, "$25 - $49" = 2, "$50 - $74" = 3, "$75+" = 4, .ordered = T, ))
     
     view(spssDemo) # see the result
+    
+    write_csv(spssDemo, file = "demo_20220309.csv")
   
   
   # Re-coding a numerical variable //age/// into Age Groups <30=1, 30-40=2, >40=3
@@ -122,6 +125,8 @@
     spssDemo <- mutate(spssDemo, age_cat = recode_factor(age_cat_num, "1" = "Under 30", "2" = " 30 to 60", "3" = "Over 60", .ordered = T ))
   
     view(spssDemo)
+    
+    write_csv(spssDemo, file = "demo_20220309.csv")
 
   # Remove or re-code absent data
   
@@ -173,7 +178,9 @@
   
     help("mutate")
     
-    spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response) #add up all of the observations for a variable and create a new variable from that
+    spssDemo_technology_totals <- mutate(spssDemo_technology, "total_technology" = wireless + multline + voice + pager + internet + callid + callwait + owntv + ownvcr +owncd + ownpda + ownpc + ownfax + news + response)
+    
+      #add up all of the observations for a variable and create a new variable from that
     
     view(spssDemo_technology_totals)
     
@@ -190,11 +197,17 @@
     
     skim(spssDemo_technology_totals_alone)
     
-    spssDemo$total_technology <- spssDemo_technology_totals_alone # use the vector created when we tranmute to add it to our dataset
+    spssDemo$total_technology <- spssDemo_technology_totals_alone 
+    
+    # use the vector created when we tranmute to add it to our dataset
     
     spssDemo$total_technology <- as.numeric(unlist(spssDemo$total_technology))
     
+    #changes the variable from a list to a vector
+    
     view(spssDemo)
+    
+    write_csv(spssDemo, file = "demo_20220309.csv")
 
   
   #arrange(...) allows you to sort your data

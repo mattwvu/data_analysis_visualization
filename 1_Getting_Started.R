@@ -110,6 +110,8 @@ To set your working directory:
 ## Before we get Started ----------------------------------------------------
     
 #1. Objects
+    
+    a <-  2
 #2. Built-in Functions and Arguments
 #3. Packages
 #4. Reading data into R
@@ -172,7 +174,8 @@ To set your working directory:
     
   # You can use write.csv() to export a csv file of your data.
     
-    quickSave <-  write.csv(spssDemo, "Demographic_data.csv")
+    write.csv(gss, "gss_20220319.csv")
+   
     
   #You should save the script file as a .R file, which can be opened with a text file editor, or in R.
 

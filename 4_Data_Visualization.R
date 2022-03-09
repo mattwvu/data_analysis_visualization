@@ -108,7 +108,7 @@
   # The Order of the grammar of plotting is important
   
   bidenApproval.scatter + 
-    geom_hline(yintercept = 50, size = 5, color = "grey") + 
+    geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point() +
     theme_bw()
   
@@ -116,7 +116,8 @@
 ## Subsetting Factors with Facets ----------------------------------------------------------
   
     
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "grey") + 
+  bidenApproval.scatter + 
+    geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point() + facet_grid(subgroup ~.) + 
     scale_color_manual(values=c("darkseagreen", "blueviolet", "coral")) +
     theme_minimal()
@@ -137,12 +138,13 @@
 
 # Theme() allows you to change the background of the plot -------------------------------
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + 
+  bidenApproval.scatter + 
+    geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point() + 
     theme_update()
   
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 5, color = "skyblue") + 
+  bidenApproval.scatter + geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point() + 
     theme_classic()
   
@@ -151,7 +153,8 @@
   
   bidenApproval.scatter <- ggplot(bidenApproval, aes(x = modeldate))
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "grey") + 
+  bidenApproval.scatter + 
+    geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point (aes(y = approve_estimate), color = "darkseagreen") + 
     geom_point(aes(y = disapprove_estimate), color = "coral") + 
     theme_bw()
@@ -159,7 +162,8 @@
 
 ## Labs allow you to re-label x, y, title, and legend of the plot
   
-  bidenApproval.scatter + geom_hline(yintercept = 50, size = 3, color = "grey") + 
+  bidenApproval.scatter + 
+    geom_hline(yintercept = 50, size = 25, color = "grey", alpha = .25) + 
     geom_point (aes(y = approve_estimate), color = "darkseagreen") + 
     geom_point (aes(y = disapprove_estimate), color = "coral") +  
     labs(y="Percent Approval", 
@@ -174,9 +178,11 @@
 ## Histogram ----------------------------------------------------------------------------------------
   
   
-  spssDemo <- read.spss("demo.sav", use.value.labels = T)
+  spssDemo <- read_csv("demo_20220309.csv")
   spssDemo <- as_tibble(spssDemo)
-  spssDemo
+  summary(spssDemo)
+  
+  view(spssDemo)
  
  
   spssDemo.hist <- ggplot(data = spssDemo, aes(x = age))
